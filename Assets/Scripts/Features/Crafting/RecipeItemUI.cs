@@ -104,10 +104,27 @@ public class RecipeItemUI : MonoBehaviour, IPointerClickHandler
             string ingredientName = ingredient.Item.Name;
             int quantityNeeded = ingredient.QuantityNeeded;
 
-            InventorySlot slot = inventory.Slots.Find(slot => slot.Item?.Id == ingredient.Item.Id);
+            // InventorySlot slot = inventory.Slots.Find(slot => slot.Item?.Id == ingredient.Item.Id);
 
-            slot.UpdateQuantity(-quantityNeeded);
-            inventory.UpdateItemsList(ingredient.Item, -quantityNeeded);
+            // Find all slots with the same item and update their quantity
+            List<InventorySlot> slots = inventory.Slots.FindAll(slot =>
+                slot.Item?.Id == ingredient.Item.Id
+            );
+
+            // This is for when the player splits the stack into multiple slots
+            foreach (var slot in slots)
+            {
+                // We want to consume the quantity needed from the first slot, then the second, etc.
+                if (quantityNeeded <= 0)
+                    break;
+
+                int quantityToRemove = Mathf.Min(quantityNeeded, slot.Quantity);
+                slot.UpdateQuantity(-quantityToRemove);
+                quantityNeeded -= quantityToRemove;
+            }
+
+            // slot.UpdateQuantity(-quantityNeeded);
+            inventory.UpdateItemsList(ingredient.Item, -ingredient.QuantityNeeded);
         }
 
         UpdateQuantityOwnedText();
