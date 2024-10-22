@@ -113,16 +113,28 @@ public class RecipeItemUI : MonoBehaviour, IPointerClickHandler
         UpdateQuantityOwnedText();
     }
 
+    private void SetRecipeImageTransparent()
+    {
+        Color color = Color.gray;
+        color.a = 0.7f;
+        recipeImage.color = color;
+    }
+
+    public void CheckIfHasEnoughIngredients()
+    {
+        if (!HasEnoughIngredients())
+        {
+            SetRecipeImageTransparent();
+        }
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (HasEnoughIngredients())
         {
             CraftRecipe(recipe);
             ConsumeIngredients(recipe);
-        }
-        else
-        {
-            Debug.Log("Not enough");
+            CheckIfHasEnoughIngredients();
         }
     }
 }

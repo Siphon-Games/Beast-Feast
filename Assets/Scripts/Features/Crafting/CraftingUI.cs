@@ -36,6 +36,7 @@ public class CraftingUI : MonoBehaviour
             position.y -= rectTransform.rect.height + 10f;
 
             recipeItem.Initialize(recipe, inventoryPrefab);
+            recipeItem.CheckIfHasEnoughIngredients();
         }
     }
 }
