@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IChanceScore
 {
-    float chanceScore { get; }
+    float ChanceScore { get; }
 }
