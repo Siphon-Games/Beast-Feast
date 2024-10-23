@@ -43,7 +43,6 @@ public class CharacterController2D : MonoBehaviour, ICharacterMovement2D
         {
             velocity = moveSpeed * move;
             spriteRenderer.flipX = moveX < 0;
-            // small change
         }
         else
         {

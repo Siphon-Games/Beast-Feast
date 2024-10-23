@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DungoenManager : MonoBehaviour
+public class DungeonManager : MonoBehaviour
 {
     [SerializeField]
-    List<DungeonRoom> dungeonRooms;
+    DungeonConfig dungeonConfig;
 
     readonly List<DungeonRoom> spawnedRooms = new();
 
@@ -20,10 +20,10 @@ public class DungoenManager : MonoBehaviour
         GenerateRoom(DoorLocation.Right);
     }
 
-    void GenerateRoom(DoorLocation enteredDoor, DungeonRoom roomToSpawn = null)
+    void GenerateRoom(DoorLocation enteredDoor, RoomConfig roomConfig = null)
     {
-        var room = roomToSpawn == null ? GetRoomToSpawn() : roomToSpawn;
-        var spawnedRoom = Instantiate(room);
+        var roomConfigToSpawn = roomConfig == null ? GetRoomToSpawn() : roomConfig;
+        var spawnedRoom = Instantiate(roomConfigToSpawn.Room);
         var lastRoom = GetLastSpawnedRoom();
 
         if (lastRoom != null)
@@ -33,22 +33,20 @@ public class DungoenManager : MonoBehaviour
         }
 
         spawnedRooms.Add(spawnedRoom);
-        List<DungeonRoom> roomsToSpawn =
+        List<RoomConfig> roomsToSpawn =
             new() { GetRoomToSpawn(), GetRoomToSpawn(), GetRoomToSpawn() };
 
-        spawnedRoom.InitializeDoorTriggers(OnEnterDoor, enteredDoor, roomsToSpawn);
+        spawnedRoom.Initialize(OnEnterDoor, enteredDoor, roomsToSpawn, roomConfigToSpawn.Type);
     }
 
-    void OnEnterDoor(Collider collider, DoorLocation location, DungeonRoom roomToSpawn)
+    void OnEnterDoor(Collider collider, DoorLocation location, RoomConfig roomConfig)
     {
-        GenerateRoom(location, roomToSpawn);
+        GenerateRoom(location, roomConfig);
     }
 
-    DungeonRoom GetRoomToSpawn()
+    RoomConfig GetRoomToSpawn()
     {
-        int randomIndex = UnityEngine.Random.Range(0, dungeonRooms.Count - 1);
-
-        return dungeonRooms[randomIndex];
+        return RNGesus.WeightedRoll(dungeonConfig.Rooms);
     }
 
     DungeonRoom GetLastSpawnedRoom()
@@ -69,18 +67,18 @@ public class DungoenManager : MonoBehaviour
 
     Vector3 GetModificactionsByEnteredDoor(Vector3 lastRoomsize, DoorLocation enteredDoor)
     {
-        switch (enteredDoor)
+        return enteredDoor switch
         {
-            case DoorLocation.Left:
-                return new(lastRoomsize.x * -1, 0, 0);
-            case DoorLocation.Right:
-                return new(lastRoomsize.x, 0, 0);
-            case DoorLocation.Top:
-                return new(0, 0, lastRoomsize.z);
-            case DoorLocation.Bottom:
-                return new(0, 0, lastRoomsize.z * -1);
-            default:
-                return new(0, 0, 0);
-        }
+            DoorLocation.Left => new(lastRoomsize.x * -1, 0, 0),
+            DoorLocation.Right => new(lastRoomsize.x, 0, 0),
+            DoorLocation.Top => new(0, 0, lastRoomsize.z),
+            DoorLocation.Bottom => new(0, 0, lastRoomsize.z * -1),
+            _ => new(0, 0, 0),
+        };
     }
+}
+
+public struct RoomTypeAndSpawnLocation
+{
+    public RoomTypes type;
 }

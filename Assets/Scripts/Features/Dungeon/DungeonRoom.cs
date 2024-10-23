@@ -12,20 +12,25 @@ public class DungeonRoom : MonoBehaviour
         bottomDoor;
 
     [SerializeField]
-    RoomTypes type;
-    public RoomTypes Type => type;
-
-    [SerializeField]
     TextMeshProUGUI roomTitle;
 
-    public void InitializeDoorTriggers(
-        Action<Collider, DoorLocation, DungeonRoom> _onEnterDoor,
+    public void Initialize(
+        Action<Collider, DoorLocation, RoomConfig> _onEnterDoor,
         DoorLocation lastEnteredDoor,
-        List<DungeonRoom> roomsToSpawn
+        List<RoomConfig> roomConfigs,
+        RoomTypes type
     )
     {
         roomTitle.text = type.ToString();
+        InitializeDoorTriggers(_onEnterDoor, lastEnteredDoor, roomConfigs);
+    }
 
+    void InitializeDoorTriggers(
+        Action<Collider, DoorLocation, RoomConfig> _onEnterDoor,
+        DoorLocation lastEnteredDoor,
+        List<RoomConfig> roomConfigs
+    )
+    {
         var activeDoors = DisableDoor(
             lastEnteredDoor,
             new() { leftDoor, rightDoor, topDoor, bottomDoor }
@@ -35,7 +40,7 @@ public class DungeonRoom : MonoBehaviour
 
         activeDoors.ForEach(door =>
         {
-            door.SetOnEnterDoor(_onEnterDoor, roomsToSpawn[index]);
+            door.SetOnEnterDoor(_onEnterDoor, roomConfigs[index]);
             index++;
         });
     }

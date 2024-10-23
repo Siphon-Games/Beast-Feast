@@ -64,13 +64,13 @@ public static class RNGesus
     {
         CheckValidity(items);
 
-        float totalScore = items.Sum(item => item.chanceScore);
+        float totalScore = items.Sum(item => item.ChanceScore);
         float randomValue = Random.Range(0f, totalScore);
         float currentScore = 0f;
 
         foreach (T item in items)
         {
-            currentScore += item.chanceScore;
+            currentScore += item.ChanceScore;
 
             if (currentScore > randomValue)
             {

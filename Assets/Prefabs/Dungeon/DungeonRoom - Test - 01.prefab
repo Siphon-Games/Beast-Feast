@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DungeonRoom - Test - 01
       objectReference: {fileID: 0}
+    - target: {fileID: 4707540273592184520, guid: 0101fa21e0b18344f8c86af01ceef9fe, type: 3}
+      propertyPath: chanceScore
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

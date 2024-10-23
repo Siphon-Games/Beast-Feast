@@ -7,9 +7,9 @@ public class DungeonRoomDoor : MonoBehaviour
     [SerializeField]
     DoorLocation location;
 
-    DungeonRoom roomToSpawn;
+    RoomConfig roomToSpawn;
 
-    Action<Collider, DoorLocation, DungeonRoom> onEnterDoor;
+    Action<Collider, DoorLocation, RoomConfig> onEnterDoor;
 
     bool isDoorEntered = false;
 
@@ -17,8 +17,8 @@ public class DungeonRoomDoor : MonoBehaviour
     TextMeshProUGUI spawnRoomTitle;
 
     public void SetOnEnterDoor(
-        Action<Collider, DoorLocation, DungeonRoom> _onEnterDoor,
-        DungeonRoom _roomToSpawn
+        Action<Collider, DoorLocation, RoomConfig> _onEnterDoor,
+        RoomConfig _roomToSpawn
     )
     {
         onEnterDoor = _onEnterDoor;
