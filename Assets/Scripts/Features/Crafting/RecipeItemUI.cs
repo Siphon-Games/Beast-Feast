@@ -104,8 +104,6 @@ public class RecipeItemUI : MonoBehaviour, IPointerClickHandler
             string ingredientName = ingredient.Item.Name;
             int quantityNeeded = ingredient.QuantityNeeded;
 
-            // InventorySlot slot = inventory.Slots.Find(slot => slot.Item?.Id == ingredient.Item.Id);
-
             // Find all slots with the same item and update their quantity
             List<InventorySlot> slots = inventory.Slots.FindAll(slot =>
                 slot.Item?.Id == ingredient.Item.Id
