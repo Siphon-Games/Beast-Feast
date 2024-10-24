@@ -24,23 +24,7 @@ public class InventorySlotPrefab : InventorySlot
         ItemQuantityBackground.gameObject.SetActive(quantity > 1);
         ItemQuantityField.text = Quantity.ToString();
         ItemImage.gameObject.SetActive(true);
-        ItemImage.color = GetColorById(item.Id);
-    }
-
-    // Remove after test
-    Color GetColorById(int id)
-    {
-        return id switch
-        {
-            1 => Color.blue,
-            2 => Color.red,
-            3 => Color.yellow,
-            4 => Color.gray,
-            5 => Color.green,
-            6 => Color.magenta,
-            7 => Color.cyan,
-            _ => Color.black,
-        };
+        ItemImage.sprite = item.Icon;
     }
 
     public override void RemoveItem()

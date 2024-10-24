@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caaa269f262e9ee489a29c8ac9e07678, type: 3}
+  m_Name: Pie
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: ff8fe7a7d329d022
+  Name: Pie
+  Description: 
+  Ingredients:
+  - Item: {fileID: 11400000, guid: d8c8c7e47e3cb63449b7add538eb9bd8, type: 2}
+    QuantityNeeded: 4
+  - Item: {fileID: 11400000, guid: b33aaaa23672f3546b282d4fe4989d8c, type: 2}
+    QuantityNeeded: 2
+  - Item: {fileID: 11400000, guid: 8fcc2fe727be4aa4bae77c58df0b86c2, type: 2}
+    QuantityNeeded: 2
+  ResultingDish: {fileID: 11400000, guid: 5e28dc64f71f2414fbe7fbd122b5ee9d, type: 2}

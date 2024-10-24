@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,8 +22,8 @@ public class InventoryUI
 
     Image draggingItem;
 
-    [SerializeField]
-    List<InventoryItem> items;
+    [field: SerializeField]
+    public List<InventoryItem> items { get; private set; }
 
     [SerializeField]
     Button SaveButton,
@@ -84,13 +85,39 @@ public class InventoryUI
 
         List<(InventoryItem item, int quantity)> itemsWithQuantities = new();
 
-        // Remove after test
         items.ForEach(item =>
         {
-            itemsWithQuantities.Add(new(item, Random.Range(1, 5)));
+            if (item.Quantity > 0)
+            {
+                itemsWithQuantities.Add(new(item, item.Quantity));
+            }
         });
 
         AddItems(itemsWithQuantities);
+    }
+
+    public void AddNewItem(InventoryItem item, int quantity)
+    {
+        List<(InventoryItem, int)> newDishList = new List<(InventoryItem, int)>
+        {
+            (item, quantity),
+        };
+
+        AddItems(newDishList);
+        UpdateItemsList(item.Item, quantity);
+    }
+
+    public void UpdateItemsList(ItemSO item, int quantity)
+    {
+        var existingItem = items.FirstOrDefault(i => i.Item.Id == item.Id);
+        if (existingItem != null)
+        {
+            existingItem.Quantity += quantity;
+        }
+        else
+        {
+            items.Add(new InventoryItem(item, quantity));
+        }
     }
 
     public void LoadInventory()
@@ -108,7 +135,7 @@ public class InventoryUI
     {
         var targetSlot =
             eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<InventorySlot>();
-        if (targetSlot != null && targetSlot.Item != null && targetSlot.Item.Id > 0)
+        if (targetSlot != null && targetSlot.Item != null && targetSlot.Item.Id != null)
         {
             if (draggingItem != null)
             {

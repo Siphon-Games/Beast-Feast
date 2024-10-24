@@ -4,12 +4,15 @@ using UnityEngine;
 [Serializable]
 public class InventoryItem
 {
-    [field: SerializeField]
-    public int Id { get; private set; }
-    public string Type => GetType().Name;
+    public ItemSO Item;
+    public int Quantity;
 
-    public InventoryItem(int id)
+    public string Id => Item.Id;
+    public Sprite Icon => Item.Icon;
+
+    public InventoryItem(ItemSO item, int quantity)
     {
-        Id = id;
+        Item = item;
+        Quantity = quantity;
     }
 }

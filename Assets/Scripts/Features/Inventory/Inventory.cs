@@ -79,6 +79,14 @@ public class Inventory : MonoBehaviour
     {
         newItems.ForEach(newItem =>
         {
+            // Find existing item by id, if exists then update quantity
+            var existingItem = Slots.Find(slot => slot.Item?.Id == newItem.item.Id);
+            if (existingItem != null)
+            {
+                existingItem.UpdateQuantity(newItem.quantity);
+                return;
+            }
+
             var (item, quantity) = newItem;
             var slot = FindItemSlot(item);
 

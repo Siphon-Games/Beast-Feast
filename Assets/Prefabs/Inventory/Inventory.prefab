@@ -505,11 +505,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c3807409c29e24abb098353abaacf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <InventorySize>k__BackingField: 0
+  <InventorySize>k__BackingField: 21
   fileSaveString: inventory
   _slotPrefab: {fileID: 6390023914503535448, guid: 24cf213472e9ed943917466b697bcd31, type: 3}
   _parentRectTransform: {fileID: 3786729302602751510}
-  items: []
+  items:
+  - item: {fileID: 11400000, guid: e4e6774108c19fd4cb9623ffca4aa466, type: 2}
+  - item: {fileID: 11400000, guid: 8fcc2fe727be4aa4bae77c58df0b86c2, type: 2}
   SaveButton: {fileID: 6805531348125378589}
   LoadButton: {fileID: 4636138298591093850}
   itemMoveTypes: 0100000000000000
